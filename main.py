@@ -5,10 +5,9 @@ import pandas as pd
 import requests
 import math
 
-def crawl_one_page(pageNo):
+def crawl_one_page(pageNo,inqryBgnDt,inqryEndDt):
     numOfRows = "100"
-    inqryBgnDt = "20230205"
-    inqryEndDt = "20230206"
+
     serviceKey = "OccOR9b4C5TACLxbmro6rgtnr0yfMoipH32Sr5jjHsLsClbVuW%2BTRFnf%2Br09R5jr5gGIv2EeUC%2BDugU%2BhYj%2FAA%3D%3D&"
     requests_url = f"http://apis.data.go.kr/1230000/ThngListInfoService02/getThngPrdnmLocplcAccotListInfoInfoPrdlstSearch?type=json&numOfRows={numOfRows}&pageNo={str(pageNo)}&inqryBgnDt={inqryBgnDt}&inqryEndDt={inqryEndDt}&serviceKey={serviceKey}"
     res = requests.get(requests_url)
@@ -74,7 +73,10 @@ def crawl_one_page(pageNo):
 
 if __name__ == '__main__':
     pageNo = 1
-    cnt = crawl_one_page(pageNo)
+    inqryBgnDt = "20230205"
+    inqryEndDt = "20230206"
+    
+    cnt = crawl_one_page(pageNo,inqryBgnDt,inqryEndDt)
     while True:
         print(cnt)
         if cnt == 0:
@@ -82,4 +84,4 @@ if __name__ == '__main__':
         else:
             cnt -= 1
             pageNo += 1
-            crawl_one_page(pageNo)
+            crawl_one_page(pageNo,inqryBgnDt,inqryEndDt)
